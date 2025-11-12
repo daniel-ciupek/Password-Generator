@@ -23,10 +23,28 @@ class PasswordGenerator {
     document
       .querySelectorAll(".options input [type='checkbox']")
       .forEach((cb) => cb.addEventListener("click", this.updateOptions));
+
+      this.generateButton.addEventListener("click", this.generatePassword);
+
+      this.updateOptions();
   }
 
   updateOptions = () => {
-    
+    const optionMethods = [];
+    if(this.uppercaseCheckbox.checked)
+         optionMethods.push(this.getRandomUppercase);
+
+    if(this.lowercaseCheckbox.checked)
+        optionMethods.push(this.getRandomLowercase);
+
+    if(this.numbersCheckbox.checked)
+        optionMethods.push(this.getRandomNumber);
+
+    if(this.symbolsCheckbox.checked)
+        optionMethods.push(this.getRandomSymbol);
+
+    this.optionMethods = optionMethods;
+
   };
 
   getRandomUppercase() {
@@ -44,6 +62,9 @@ class PasswordGenerator {
   getRandomSymbol() {
     const symbols = `!@#$%^&*()_+-=[]{}|;:'",.<>/?~|`;
     return symbols[Math.floor(Math.random() * symbols.length)];
+  }
+  generatePassword = () => {
+    
   }
 }
 const passwordGenerator = new PasswordGenerator();
