@@ -44,10 +44,13 @@ h3 {
   width: 85%;
   height: 42px;
   padding: 10px;
-  background-color: #c4c9ce;
+  background-color: #4a4b4b;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  
 }
 
 #clipboard {

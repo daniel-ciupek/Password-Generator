@@ -21,10 +21,12 @@ class PasswordGenerator {
 
   init() {
     document
-      .querySelectorAll(".options input [type='checkbox']")
+      .querySelectorAll(".options input[type='checkbox']")
       .forEach((cb) => cb.addEventListener("click", this.updateOptions));
 
       this.generateButton.addEventListener("click", this.generatePassword);
+
+      this.clipboardButton.addEventListener("click", this.copyToClipboard);
 
       this.updateOptions();
   }
@@ -64,7 +66,29 @@ class PasswordGenerator {
     return symbols[Math.floor(Math.random() * symbols.length)];
   }
   generatePassword = () => {
-    
+    if(!this.length.value) return;
+    if(this.optionMethods.length === 0) return;
+
+    const arrIndexes = Array.from(Array(+this.length.value).keys());
+
+    const password = arrIndexes.map( i => {
+        const method = this.getRandomGenMethod();
+        return method();
+    }).join("");
+
+    this.resultPassword.innerHTML = password;
   }
+  getRandomGenMethod = () => {
+   const methods = this.optionMethods;
+   return methods[Math.floor(Math.random() * methods.length)]; 
+  }
+
+  copyToClipboard = () => {
+    const v = this.resultPassword.innerHTML;
+    const cb = navigator.clipboard;
+    cb.writeText(v)
+    .then( () => console.log(`Hasło zostało skopiowane do schowka`));
+  }
+
 }
 const passwordGenerator = new PasswordGenerator();
